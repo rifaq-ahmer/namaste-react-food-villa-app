@@ -1,12 +1,19 @@
 import { useEffect, useState } from "react";
 import RestaurantCard from "./RestaurantCard";
+import ShimmerUI from "./shimmerUI";
 
 const Body = () => {
-	const [restaurants, setRestaurants] = useState([]);
+	const [allRestaurants, setAllRestaurants] = useState([]);
+
+	const [filteredRestaurants, setFilteredRestaurants] = useState([]);
 	const [searchInput, setSearchInput] = useState("");
 	const filteredData = (searchInput, restaurants) => {
+		console.log("searchInput", searchInput);
+		console.log("restaurants", restaurants);
 		return restaurants?.filter((restaurant) =>
-			restaurant?.name?.includes(searchInput)
+			restaurant?.data?.name
+				?.toLowerCase()
+				?.includes(searchInput?.toLowerCase())
 		);
 	};
 
@@ -18,10 +25,16 @@ const Body = () => {
 			"https://www.swiggy.com/dapi/restaurants/list/v5?lat=19.237343&lng=73.1255529&page_type=DESKTOP_WEB_LISTING"
 		);
 		const json = await data.json();
-
-		setRestaurants(json?.data?.cards[2]?.data?.data?.cards);
+		console.log(
+			"ALL RESTAURENTS........",
+			json?.data?.cards[2]?.data?.data?.cards
+		);
+		setAllRestaurants(json?.data?.cards[2]?.data?.data?.cards);
+		setFilteredRestaurants(json?.data?.cards[2]?.data?.data?.cards);
 	}
-	return (
+	return filteredRestaurants?.length === 0 ? (
+		<ShimmerUI />
+	) : (
 		<>
 			<div className="search-container">
 				<input
@@ -36,15 +49,16 @@ const Body = () => {
 				<button
 					className="search-btn"
 					onClick={() => {
-						const data = filteredData(searchInput, restaurants);
-						setRestaurants(data);
+						const data = filteredData(searchInput, allRestaurants);
+						console.log(data, "Filtered Data");
+						setFilteredRestaurants(data);
 					}}
 				>
 					Search
 				</button>
 			</div>
 			<div className="restaurent-list">
-				{restaurants?.map((restaurant) => {
+				{filteredRestaurants?.map((restaurant) => {
 					return (
 						<RestaurantCard {...restaurant.data} key={restaurant.data.id} />
 					);
