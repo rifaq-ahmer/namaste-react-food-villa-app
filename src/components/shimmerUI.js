@@ -1,5 +1,13 @@
-const ShimmerUI = () => {
-	return <div>ShimmerUI Loading......</div>;
-};
+import styles from "./shimmer.module.css";
 
-export default ShimmerUI;
+export default function Shimmer() {
+	return (
+		<div>
+			<div className={[styles.shine, styles.photo].join(" ")} />
+			<div className={styles.div}>
+				<div className={[styles.shine, styles.lines].join(" ")} />
+				<div className={[styles.shine, styles.lines].join(" ")} />
+			</div>
+		</div>
+	);
+}
