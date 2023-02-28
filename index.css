@@ -29,3 +29,6 @@
 	display: flex;
 	flex-wrap: wrap;
 }
+.restaurant-menu-container {
+	display: flex;
+}

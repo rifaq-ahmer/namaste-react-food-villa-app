@@ -1,9 +1,10 @@
 import { LOGO_URL } from "./constant";
+import { Link } from "react-router-dom";
 
 const Title = () => (
-	<a href="/">
+	<Link to="/">
 		<img className="logo" src={LOGO_URL} alt="Food Villa Logo" />
-	</a>
+	</Link>
 );
 
 const Header = () => {
@@ -12,9 +13,15 @@ const Header = () => {
 			<Title />
 			<div className="nav-items">
 				<ul>
-					<li>Home</li>
-					<li>About</li>
-					<li>Contact</li>
+					<Link to="/">
+						<li>Home</li>
+					</Link>
+					<Link to="/about">
+						<li>About</li>
+					</Link>
+					<Link to="/contact-us">
+						<li>Contact</li>
+					</Link>
 					<li>Cart</li>
 				</ul>
 			</div>
